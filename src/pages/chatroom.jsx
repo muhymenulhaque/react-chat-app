@@ -89,9 +89,7 @@ const Chatroom = () => {
   
   return (
     <Box sx={{ bgcolor: '#aaf' }}>
-      <Container maxWidth='sm'sx={{
-          backgroundColor: 'white'
-        }} >
+      <Container maxWidth='sm'sx={{ backgroundColor: 'white' }} >
         
         <div>
           <Messages messages={messages} />

@@ -1,0 +1,154 @@
+#homepage-container {
+    background-color: white; 
+    color: black;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+
+#banner-part {
+    background-color: #404eed;
+    color: white;
+}
+
+
+#header {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+}
+
+#logo {
+    height: 2em;
+    width: 2em;
+    background-color: red;
+    margin: 1em;
+}
+
+#title {
+    font-weight: bolder;
+}
+
+
+#intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    padding: 3em 5em 5em 5em;
+}
+
+#catchphrase {
+    font-size: 3em;
+    font-weight: 900;
+    margin: .5em;
+}
+
+#description {
+    width: 42em;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 100;
+}
+
+#top-chatroom-btn {
+    font-size: 1.6em;
+    padding: .5em 1em;
+    background-color: white;
+    border: none;
+    border-radius: 28px;
+}
+
+
+.feature-element {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feature-picture {
+    min-height: 30em;
+    min-width: 30em;
+}
+
+.feature-text {
+    margin: 2.5em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#feature1-picture {
+    background-color: lightskyblue;
+}
+
+#feature2-picture {
+    background-color: lightcoral;
+}
+
+#feature3-picture {
+    background-color: lightslategray;
+}
+
+#feature2 {
+    flex-flow: row-reverse;
+    background-color: #f6f6f6;
+}
+
+
+#guide2 {
+    background-color: #f6f6f6;
+    padding: 7em 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#guide-text {
+    color: #404eed;
+    font-size: 2em;
+    font-weight: bolder;
+    
+    margin-bottom: 1em;
+}
+
+#bottom-chatroom-btn {
+    color: white;
+    background-color: #5865f2;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 28px;
+    padding: .5em 2em;
+    font-weight: 100;
+}
+
+
+#footers {
+    background-color: #23272a;
+    color: white;
+    padding: 3em;
+    font-weight: 100;
+}
+
+#gh-project-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#github-logo {
+    height: 2em;
+    width: 2em;
+    margin-right: 1em;
+}
+
+#gh-project-link > span  {
+    text-decoration:none;
+    color: white;
+}
+
+#support-text {
+    font-weight: 400;
+}

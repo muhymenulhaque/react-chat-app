@@ -3,21 +3,7 @@ import MessageGroup from './MessageGroup';
 
 
 const Messages = ({ messages }) => {
-  // let lastMessage = null;
-
-  // return (
-  //   <div>
-  //     { 
-  //       messages.map((message) => {
-  //         let messageComp = <Message message={ message } lastMessage={ lastMessage }/>
-  //         lastMessage = message;
-  //         return messageComp;
-  //       }) 
-  //     }
-  //   </div>
-  // )
-
-
+  
   let lastMessage = null;
   const groups = [];
   let group = [];
@@ -41,10 +27,9 @@ const Messages = ({ messages }) => {
       {
         groups.map(Group => {
           return (
-            <>
+            <div>
               <MessageGroup messages={Group} />
-              <br/>
-            </>
+            </div>
           )
         })
       }

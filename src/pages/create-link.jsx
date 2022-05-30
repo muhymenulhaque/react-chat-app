@@ -1,6 +1,9 @@
 import React from "react";
-import TextField from '@mui/material/TextField';
-import { generateLink } from "../firebase";
+import CollectName from "../components/CollectName";
+import AfterNameCollection from "../components/AfterNameCollection";
+import { Paper } from "@mui/material";
+
+import "./../styles/create-link-styles.css";
 
 const CreateLink = () => {
     
@@ -8,25 +11,14 @@ const CreateLink = () => {
     const [name, setName] = React.useState("");
     const [generatedLink, setGL] = React.useState("");
 
-    React.useEffect(() => {
-        setGL(generateLink());
-    }, [])
+    const [nameCollectionDone, setNCD] = React.useState(false);
 
     return (
-        <>
-            What should we call you? <br />
-            <TextField label="Name" variant="outlined" value={name} onChange={(e) => {
-                setName(e.target.value);
-            }}/>
-            {name}
-            <br />
-
-            Share this link with your friend to let them join. <br />
-            {generatedLink} 'copy' <br />
-
-            Chatroom  <br />
-
-        </>
+        <div id="create-link-container">
+            <Paper style={{width: "30em", padding: "1.5em",  backgroundColor: "#36393f", color: "#b9bbbe"}} elevation={3}>
+                {(nameCollectionDone && generatedLink !== "") ? <AfterNameCollection generatedLink={generatedLink}/> : <CollectName name={name} setName={setName} setNCD={setNCD} setGL={setGL}/>}
+            </Paper>
+        </div>
     );
 }
 

@@ -1,0 +1,10 @@
+#create-link-container {
+    background-color: #5865f2;
+    color: white; 
+    min-height: 100vh;
+    min-width: 100vw; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    user-select: none;
+}

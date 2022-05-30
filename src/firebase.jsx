@@ -18,19 +18,34 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const latestIDRef = doc(db, "metas", "latestID");
 
 
 const getServerTimestamp = () => {
   return serverTimestamp();
 }
 
-const generateLink = () => {
+const setNewName = async (verifiedLink, name) => {
+  localStorage.setItem(verifiedLink, name);
+
+  // create avatar based on random color
+  const randomNumColor = Math.floor(Math.random() * 338);
+
+  let res = await getDoc(doc(db, "gradients", randomNumColor.toString()));
+	if (!res) {
+    
+  } else {
+    let color = res.data();
+    localStorage.setItem(verifiedLink + ".start", color.start);
+    localStorage.setItem(verifiedLink + ".end", color.end)
+  }
+}
+
+const newLink = async (name) => {
   const randomLink = () => {
     const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let link = "";
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
         const rand = Math.floor(Math.random() * characters.length);
         link += characters[rand];
     }
@@ -51,6 +66,16 @@ const generateLink = () => {
   while(!verifyLink(verifiedLink)) {
     verifiedLink = randomLink();
   }
+
+  // create room with verified link
+  setNewName(verifiedLink, name)
+  await setDoc(doc(db, "links", verifiedLink), {created: serverTimestamp()});
+  await setDoc(doc(db, "links", verifiedLink, "messages", "-1"), {message: "negative 1"});
+  await setDoc(doc(db, "links", verifiedLink, "metas", "latestId"), {message: "-1"});
+
+
+  
+
   return verifiedLink;
 }
 
@@ -58,38 +83,39 @@ const generateLink = () => {
 
 
 //Get Latest ID of Message 
-const getLatestId = async () => {
-  const res = await getDoc(latestIDRef);
+const getLatestId = async (roomId) => {
+  const latestIdRef = doc(db, "links", roomId, "metas", "latestId");
+  const res = await getDoc(latestIdRef);
   if (!res) {
     console.log("ERROR READING DATA");
     return 0;
   }
   
-  let latestID = await res.data().message;
-  latestID = (typeof latestID == 'number') ? latestID : 0;
+  let latestId = await res.data().message;
+  latestId = (typeof latestId == "number") ? latestId : 0;
   
-  return latestID;
+  return latestId;
 }
 
 
 //Get latest x amount of messages from firebase
-const getSnapshotEssentials = async () => {
-  const latestID = await getLatestId(); 
+const getSnapshotEssentials = async (roomId) => {
+  const latestID = await getLatestId(roomId); 
   
-  const messagesRef = collection(db, 'messages');
-  const q = query(messagesRef, where('id', '>', latestID))
+  const messagesRef = collection(db, "links", roomId, "messages");
+  const q = query(messagesRef, where("id", ">", latestID))
   
   return {onSnapshot, query: q};
 }
 
 
 //readMessages once
-const readMessages = async (numberOfMessages) => {
-  const latestID = await getLatestId(); 
+const readMessages = async (roomId, numberOfMessages) => {
+  const latestID = await getLatestId(roomId); 
   const neededIds = latestID - (numberOfMessages - 1);
   
-  const messagesRef = collection(db, 'messages');
-  const q = query(messagesRef, where('id', '>=', neededIds))
+  const messagesRef = collection(db, "links", roomId, "messages");
+  const q = query(messagesRef, where("id", ">=", neededIds))
   
   let messages = [];
   
@@ -103,11 +129,11 @@ const readMessages = async (numberOfMessages) => {
 
 
 //Add new Message to cloud
-const uploadMessage = async (message) => {
+const uploadMessage = async (roomId, message) => {
   let id = message.id;
   if (typeof id == 'number') { 
-    await setDoc(doc(db, "metas", "latestID"), {message: id});
-    await setDoc(doc(db, "messages", message.id.toString()), message); 
+    await setDoc(doc(db, "links", roomId, "metas", "latestId"), {message: id});
+    await setDoc(doc(db, "links", roomId, "messages", message.id.toString()), message); 
   } else {
     console.log("GIVEN ID IS NOT A NUMBER");
   }
@@ -130,7 +156,7 @@ const onSignIn = (f, f2) => {
     } else {
       f2(user)
     }
-  }, 2000);
+  }, 1000);
   
 }
 
@@ -157,7 +183,8 @@ const signOutUser = () => {
 
 
 export { 
-  generateLink,
+  setNewName,
+  newLink,
   getSnapshotEssentials, 
   readMessages, 
   uploadMessage, 

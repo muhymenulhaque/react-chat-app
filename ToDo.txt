@@ -1,0 +1,13 @@
+final app is gonna have
+    done -> homepage with app description and purpose
+        done -> create room popup or window
+    done -> room page for links 
+    error page for invalid linkss
+
+    
+
+    firebase recaptcha security
+
+design create-link page
+
+
