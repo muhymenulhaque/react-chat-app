@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <React.StrictMode>
-      <BrowserRouter basename={`/${process.env.PUBLIC_URL}`}>
+      <BrowserRouter>
         {console.log(process.env.PUBLIC_URL)}
         <Seo />
         <main role="main" className="wrapper">
