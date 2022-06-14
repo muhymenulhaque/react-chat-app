@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AfterNameCollection = ({generatedLink}) => {
     let navigate = useNavigate();
-    let link = window.location.origin + "/room/" + generatedLink
+    let link = window.location.origin + window.location.pathname.replace("/create-link", "")     + "/room/" + generatedLink
 
     return (
         <>

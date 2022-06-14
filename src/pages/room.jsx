@@ -50,8 +50,11 @@ const Room = () => {
         if (message === '') {
             return;
         }
+
+        let localName = localStorage.getItem(roomId);
+        localName = localName == null ?  "Nobody" : localName;
         
-        setName(localStorage.getItem(roomId) || "Nobody");
+        setName(localName);
         const date = getServerTimestamp();
         let userId = localStorage.getItem("userId");
 
@@ -79,6 +82,7 @@ const Room = () => {
             if (typeof messageId == 'number') {
                 const messageObj = {date, name, message, id: messageId, userId, avatarStartColor, avatarEndColor};
                 addMessage(messageObj);
+                console.log(messageObj)
             }
         })();
     }
@@ -99,6 +103,7 @@ const Room = () => {
 
                 if (change.type === "added") {
                     let newMessage = change.doc.data();
+                    console.log(newMessage)
 
                     if (newMessage.date === null) {
                         newMessage.date = {seconds: Math.floor(Date.now() / 1000)}
@@ -117,7 +122,8 @@ const Room = () => {
     }, []);
 
 
-    let Content = (
+
+    return (<div style={{ display: "flex", minHeight: "100vh", minWidth: "100vw", backgroundColor: "#36393f"}}>
         <Box style={{padding: "1em", marginTop: "auto", width: "100%" }}>
             <div>
                 <Messages messages={messages} />
@@ -140,11 +146,8 @@ const Room = () => {
             </IconButton>
             
         </Box>
-    )
 
-
-    return (<div style={{ display: "flex", minHeight: "100vh", minWidth: "100vw", backgroundColor: "#36393f"}}>
-        {name ? Content : <GetEmptyName roomId={roomId} setNameState={setName}/>}
+        {name ? "" : <GetEmptyName roomId={roomId} setNameState={setName}/>}
     </div>)
 }
 

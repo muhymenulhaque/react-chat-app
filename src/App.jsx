@@ -15,31 +15,34 @@ import Room from './pages/room';
 //STYLES
 import "./styles/styles.css";
 import Homepage from './pages/homepage';
+import Error from './pages/error';
 
 
 export default function App() {
 
   return (
-    <BrowserRouter>
-      
-      <Seo />
-      <main role="main" className="wrapper">
-        <div className="content">
-          {/* <ButtonAppBar /> */}
+    <React.StrictMode>
+      <BrowserRouter basename={`/${process.env.PUBLIC_URL}`}>
+        {console.log(process.env.PUBLIC_URL)}
+        <Seo />
+        <main role="main" className="wrapper">
+          <div className="content">
+            {/* <ButtonAppBar /> */}
 
-          <Routes>
-            <Route index element={<Homepage />}/>
-            <Route path="chatroom" element={<Chatroom />} />
-            <Route path="create-link" element={<CreateLink />} />
-            <Route path="room/:roomId" element={<Room />} /> 
-            <Route path="about" element={<About />} />
-            <Route path="*" element={<Homepage />}/>
-          </Routes>
-          
-        </div>
-      </main>
+            <Routes>
+              <Route path='' element={<Homepage />}/>
+              <Route path="chatroom" element={<Chatroom />} />
+              <Route path="create-link" element={<CreateLink />} />
+              <Route path="room/:roomId" element={<Room />} /> 
+              <Route path="about" element={<About />} />
+              <Route path="*" element={<Error />}/>
+            </Routes>
+            
+          </div>
+        </main>
 
-    </BrowserRouter>
+      </BrowserRouter>
+    </React.StrictMode>
   );
 }
 

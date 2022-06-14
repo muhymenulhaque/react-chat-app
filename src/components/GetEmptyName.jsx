@@ -6,7 +6,7 @@ import { setNewName } from "../firebase";
 const GetEmptyName = ({roomId, setNameState}) => {
     const [namex, setNamex] = React.useState("");
 
-    return (<div style={{minHeight: "100vh", minWidth: "100vw", display: "flex", alignItems: "center", justifyContent: "center", userSelect:"none"}}>
+    return (<div style={{zIndex: "10", position: "absolute", backgroundColor: "#5865f2", minHeight: "100vh", minWidth: "100vw", display: "flex", alignItems: "center", justifyContent: "center", userSelect:"none"}}>
         <Paper style={{width: "30em", padding: "1.5em",  backgroundColor: "#484d56", color: "#b9bbbe"}} elevation={3}>
             Select your name <br />
             <input type="text" value={namex} autoComplete="off" onChange={(e) => {
